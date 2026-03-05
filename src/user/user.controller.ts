@@ -25,7 +25,7 @@ export class UserController {
         return this.userService.getUserByEmail(email);
     }
 
-    @Post()
+    @Post('/:create')
     @HttpCode(201)
     create(@Body() data) {
         return this.userService.createUser(data);
