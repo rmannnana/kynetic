@@ -1,4 +1,6 @@
 import { UserService } from './user.service';
+import { CreateUserDto } from './dto/create-user';
+import { UpdateUserDto } from './dto/update-user';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
@@ -35,7 +37,7 @@ export declare class UserController {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    create(data: any): Promise<{
+    create(data: CreateUserDto): Promise<{
         id: string;
         email: string;
         countryCode: string | null;
@@ -46,7 +48,7 @@ export declare class UserController {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    updateUser(id: string, data: any): Promise<{
+    updateUser(id: string, data: UpdateUserDto): Promise<{
         id: string;
         email: string;
         countryCode: string | null;

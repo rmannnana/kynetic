@@ -1,5 +1,7 @@
 import { Controller, Get, Post, Patch, Put, Delete, HttpCode, Param, Body } from '@nestjs/common';
 import { UserService } from './user.service';
+import { CreateUserDto } from './dto/create-user';
+import { UpdateUserDto } from './dto/update-user';
 
 @Controller('user')
 export class UserController {
@@ -18,7 +20,7 @@ export class UserController {
         return this.userService.getUserById(id);
     }
 
-    // to avoid route ambiguity we put email under its own segment
+    // Pour éviter toute ambiguité avec la route findOneById, nous utilisons un segment de chemin différent pour la recherche par email
     @Get('email/:email')
     @HttpCode(200)
     findOneByEmail(@Param('email') email: string) {
@@ -27,13 +29,13 @@ export class UserController {
 
     @Post('/:create')
     @HttpCode(201)
-    create(@Body() data) {
+    create(@Body() data: CreateUserDto) {
         return this.userService.createUser(data);
     }
 
     @Patch(':id')
     @HttpCode(200)
-    updateUser(@Param('id') id: string, @Body() data: any) {
+    updateUser(@Param('id') id: string, @Body() data: UpdateUserDto) {
         return this.userService.updateUser(id, data);
     }
 
