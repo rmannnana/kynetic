@@ -8,27 +8,62 @@
 # **Changelog**
 
 ### Création le projet NestJS:
-    _npm install -g @nestjs/cli_
-    _nest new ._
+    ```powershell
+    npm install -g @nestjs/cli
+    nest new .
+    ```
 
 ### Installation des dépendances:
 #### Prisma
-    _npm install prisma @prisma/client_
-    _npm install -D prisma_
+    ```powershell
+    npm install prisma@6 @prisma/client@6
+    npm install -D prisma
+    ```
 
 #### Auth
-    _npm install @nestjs/passport @nestjs/jwt passport passport-local passport-jwt passport-google-oauth20_
-    _npm install bcrypt_
-    _npm install -D @types/passport-local @types/passport-jwt @types/passport-google-oauth20 @types/bcrypt_
+    ```powershell
+    npm install @nestjs/passport @nestjs/jwt passport passport-local passport-jwt passport-google-oauth20
+    npm install bcrypt
+    npm install -D @types/passport-local @types/passport-jwt @types/passport-google-oauth20 @types/bcrypt
+    ```
 
 #### Config
-    _npm install @nestjs/config_
+    ```powershell
+    npm install @nestjs/config
+    ```
 
 ### Initialisation de prisma
-    _npx prisma init_
+    ```powershell
+    npx prisma init
+    ```
 
-##### _Préparer l'environnement dans le fichier .env_
+### Préparer l'environnement dans le fichier .env
+#### Pour les valeurs JWT_ACCESS_SECRET et JWT_REFRESH_SECRET, on peut utiliser la commande
+    ```powershell
+    node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+    ```
+    pour les générer aléatoirement.
+
+#### Pour les valeur Google OAuth, il faut se les procurer sur Google Cloud Console
+##### Créer un projet sur Google Cloud Console puis dans APIs & Services → Écran de consentement → Premiers pas.
+##### Remplir le formulaire puis Cliquer sur Créer un client OAuth.
+###### **1. Sélectionner "OAuth 2.0 Client ID"**
+###### **2. Type d'application : Web application**
+###### **3. Dans Authorized redirect URIs, ajouter : http://localhost:3000/auth/google/callback**
+##### Récupérer les valeurs GOOGLE_CLIENT_ID et GOOGLE_CLIENT_SECRET
 
 ### Intiation de Docker Compose
 
 #### Là on crée le fichier docker-compose.yml à la racine du projet.
+#### Lancer 
+    ```powershell
+    docker compose up -d
+    ```
+    pour initialiser.
+
+### Défintion du schémas prisma: création des modèles User et RefreshToken
+
+### Lacer les migration avec:
+    ```powershell
+    npx prisma migrate dev --name init
+    ```
