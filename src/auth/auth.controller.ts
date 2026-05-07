@@ -1,16 +1,18 @@
-import { Controller, Post, Body, UseGuards, Req, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
+import { RegisterDto } from './dto/register.dto';
+import { RefreshDto } from './dto/refresh.dto';
 
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) { }
 
     @Post('register')
-    register(@Body() body: { email: string; password: string }) {
-        return this.authService.register(body.email, body.password);
+    register(@Body() dto: RegisterDto) {
+        return this.authService.register(dto.email, dto.password);
     }
 
     @UseGuards(LocalAuthGuard)
@@ -20,13 +22,13 @@ export class AuthController {
     }
 
     @Post('refresh')
-    refresh(@Body('refreshToken') token: string) {
-        return this.authService.refresh(token);
+    refresh(@Body() dto: RefreshDto) {
+        return this.authService.refresh(dto.refreshToken);
     }
 
     @Post('logout')
-    logout(@Body('refreshToken') token: string) {
-        return this.authService.logout(token);
+    logout(@Body() dto: RefreshDto) {
+        return this.authService.logout(dto.refreshToken);
     }
 
     @UseGuards(GoogleAuthGuard)
