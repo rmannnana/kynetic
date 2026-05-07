@@ -1,4 +1,5 @@
 import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
@@ -7,6 +8,7 @@ import { RegisterDto } from './dto/register.dto';
 import { RefreshDto } from './dto/refresh.dto';
 
 @Controller('auth')
+@Throttle({ auth: { limit: 10, ttl: 60000 } })
 export class AuthController {
     constructor(private authService: AuthService) { }
 
