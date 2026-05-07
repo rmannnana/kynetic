@@ -96,3 +96,9 @@
         nest g controller auth
     ```
 
+## Situation après le commit 386dfa1 :
+Prisma 6 + PostgreSQL + Docker
+Module Prisma (global)
+Module Users + RBAC
+Module Auth (email/password + JWT + refresh tokens + Google OAuth)
+
