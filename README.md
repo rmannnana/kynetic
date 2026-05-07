@@ -1,98 +1,308 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Kynetic — Backend Starter
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Kynetic est une base de projet backend construite avec **NestJS**, **Prisma 6** et **PostgreSQL**. Elle fournit dès le départ tout ce qu'il faut pour démarrer un nouveau projet sans repartir de zéro : authentification complète, gestion des rôles, sécurité de base et connexion à la base de données.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+L'idée est simple : cloner ce projet, ajouter ses propres modules, et se concentrer sur la logique métier.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Stack technique
 
-## Project setup
+| Outil | Version | Rôle |
+|---|---|---|
+| NestJS | 11.0.21 | Framework backend |
+| Prisma | 6.19.3 | ORM |
+| PostgreSQL | 16 | Base de données |
+| Docker | - | Conteneurisation de la DB |
+| Passport.js | - | Stratégies d'authentification |
+| JWT | - | Gestion des tokens |
 
-```bash
-$ npm install
-```
+---
 
-## Compile and run the project
+## Prérequis
 
-```bash
-# development
-$ npm run start
+Avant de commencer, assure-toi d'avoir installé :
 
-# watch mode
-$ npm run start:dev
+- [Node.js](https://nodejs.org) v18 ou supérieur (24.14.1 dans notre cas)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- [NestJS CLI](https://docs.nestjs.com/cli/overview) : `npm i -g @nestjs/cli`
 
-# production mode
-$ npm run start:prod
-```
+---
 
-## Run tests
+## Installation
+
+### 1. Cloner le projet
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/rmannnana/kynetic.git
+cd kynetic
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 2. Installer les dépendances
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3. Configurer les variables d'environnement
 
-## Resources
+Copie le fichier `.env.example` et remplis les valeurs :
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+cp .env.example .env
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Voir la section [Variables d'environnement](#variables-denvironnement) pour le détail de chaque variable.
 
-## Support
+### 4. Lancer la base de données
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+docker compose up -d
+```
 
-## Stay in touch
+### 5. Appliquer les migrations Prisma
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npx prisma migrate dev
+```
 
-## License
+### 6. Lancer le projet
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+# Développement
+npm run start:dev
+
+# Production
+npm run build
+npm run start:prod
+```
+
+L'API est disponible sur `http://localhost:3000`.
+
+---
+
+## Variables d'environnement
+
+Voici le contenu du fichier `.env.example` avec une explication de chaque variable :
+
+```env
+# URL de connexion à la base de données PostgreSQL
+# Format : postgresql://USER:PASSWORD@HOST:PORT/DB_NAME
+DATABASE_URL="postgresql://kynetic_user:kynetic_pass@localhost:5432/kynetic_db"
+
+# Clé secrète pour signer les access tokens JWT
+# Générer avec : node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+JWT_ACCESS_SECRET=change_me_access_secret
+
+# Clé secrète pour signer les refresh tokens JWT
+# Générer avec : node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+JWT_REFRESH_SECRET=change_me_refresh_secret
+
+# Durée de vie de l'access token (ex: 15m, 1h, 24h)
+JWT_ACCESS_EXPIRES_IN=15m
+
+# Durée de vie du refresh token (ex: 7d, 30d)
+JWT_REFRESH_EXPIRES_IN=7d
+
+# Identifiants OAuth Google
+# Obtenir sur : https://console.cloud.google.com → APIs & Services → Credentials
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# URL de callback Google OAuth (doit correspondre à celle configurée dans Google Cloud Console)
+GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+```
+
+---
+
+## Structure du projet
+
+```
+src/
+├── auth/                        # Module d'authentification
+│   ├── decorators/
+│   │   ├── current-user.decorator.ts   # @CurrentUser() — récupère l'utilisateur connecté
+│   │   └── roles.decorator.ts          # @Roles() — spécifie les rôles autorisés sur une route
+│   ├── dto/
+│   │   ├── login.dto.ts                # Validation du body pour le login
+│   │   ├── refresh.dto.ts              # Validation du refresh token
+│   │   └── register.dto.ts             # Validation du body pour l'inscription
+│   ├── guards/
+│   │   ├── google-auth.guard.ts        # Protection des routes Google OAuth
+│   │   ├── jwt-auth.guard.ts           # Protection des routes nécessitant un JWT valide
+│   │   ├── local-auth.guard.ts         # Protection des routes email/password
+│   │   └── roles.guard.ts              # Vérification des rôles sur les routes protégées
+│   ├── strategies/
+│   │   ├── google.strategy.ts          # Stratégie Passport pour Google OAuth
+│   │   ├── jwt.strategy.ts             # Stratégie Passport pour JWT
+│   │   └── local.strategy.ts           # Stratégie Passport pour email/password
+│   ├── auth.controller.ts
+│   ├── auth.module.ts
+│   └── auth.service.ts
+│
+├── prisma/                      # Module Prisma global
+│   ├── prisma.module.ts
+│   └── prisma.service.ts
+│
+├── users/                       # Module utilisateurs
+│   ├── dto/
+│   │   └── update-role.dto.ts          # Validation pour la mise à jour du rôle
+│   ├── users.controller.ts
+│   ├── users.module.ts
+│   └── users.service.ts
+│
+├── app.module.ts                # Module racine (config, throttler, imports globaux)
+└── main.ts                      # Point d'entrée (Helmet, ValidationPipe, port)
+
+prisma/
+├── schema.prisma                # Schéma de la base de données
+└── migrations/                  # Historique des migrations
+
+docker-compose.yml               # Configuration Docker pour PostgreSQL
+.env                             # Variables d'environnement (non versionné)
+.env.example                     # Modèle de variables d'environnement (versionné)
+```
+
+---
+
+## Endpoints disponibles
+
+### Authentification
+
+| Méthode | Route | Description | Auth requise |
+|---|---|---|---|
+| POST | `/auth/register` | Créer un compte | Non |
+| POST | `/auth/login` | Se connecter | Non |
+| POST | `/auth/refresh` | Renouveler l'access token | Non |
+| POST | `/auth/logout` | Se déconnecter | Non |
+| GET | `/auth/google` | Lancer le flux Google OAuth | Non |
+| GET | `/auth/google/callback` | Callback Google OAuth | Non |
+
+### Exemples de requêtes
+
+**Register**
+```json
+POST /auth/register
+{
+  "email": "user@example.com",
+  "password": "motdepasse123"
+}
+```
+
+**Login**
+```json
+POST /auth/login
+{
+  "email": "user@example.com",
+  "password": "motdepasse123"
+}
+```
+
+**Refresh**
+```json
+POST /auth/refresh
+{
+  "refreshToken": "uuid-du-refresh-token"
+}
+```
+
+**Logout**
+```json
+POST /auth/logout
+{
+  "refreshToken": "uuid-du-refresh-token"
+}
+```
+
+### Utilisateurs
+
+| Méthode | Route | Description | Rôle requis |
+|---|---|---|---|
+| GET | `/users/:id` | Récupérer un utilisateur | Tout utilisateur connecté |
+| PATCH | `/users/:id/role` | Modifier le rôle d'un utilisateur | ADMIN uniquement |
+
+Toutes les routes `/users` nécessitent le header :
+```
+Authorization: Bearer <access_token>
+```
+
+---
+
+## Modèle de données
+
+### User
+
+| Champ | Type | Description |
+|---|---|---|
+| id | String (UUID) | Identifiant unique |
+| email | String | Email unique |
+| password | String? | Mot de passe hashé (null si OAuth) |
+| role | Enum | USER, MODERATOR, ADMIN |
+| googleId | String? | ID Google (null si email/password) |
+| createdAt | DateTime | Date de création |
+| updatedAt | DateTime | Date de mise à jour |
+
+### RefreshToken
+
+| Champ | Type | Description |
+|---|---|---|
+| id | String (UUID) | Identifiant unique |
+| token | String | Token UUID unique |
+| userId | String | Référence vers l'utilisateur |
+| expiresAt | DateTime | Date d'expiration |
+| createdAt | DateTime | Date de création |
+
+---
+
+## Sécurité
+
+- **Helmet** : headers de sécurité HTTP appliqués globalement
+- **Rate limiting** : 20 requêtes/minute sur toutes les routes, 10 requêtes/minute sur les routes d'authentification
+- **Validation** : tous les body de requête sont validés via `class-validator`, les champs non déclarés sont rejetés
+- **Passwords** : hashés avec bcrypt (10 rounds)
+- **Refresh tokens** : stockés en base, révocables à tout moment, expiration à 7 jours
+
+---
+
+## Ajouter un nouveau module
+
+Pour étendre ce projet avec un nouveau module (exemple : `products`) :
+
+```bash
+nest g module products
+nest g service products
+nest g controller products
+```
+
+Le `PrismaService` est global, il est directement injectable sans import supplémentaire :
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+
+@Injectable()
+export class ProductsService {
+  constructor(private readonly prisma: PrismaService) {}
+}
+```
+
+Pour protéger une route avec JWT :
+
+```typescript
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '@prisma/client';
+
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.ADMIN)
+@Get()
+findAll() {}
+```
+
+---
+
+## Licence
+
+MIT

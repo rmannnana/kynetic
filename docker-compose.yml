@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: kynetic_user
-      POSTGRES_PASSWORD: 1MotDePasse
+      POSTGRES_PASSWORD: kynetic_password
       POSTGRES_DB: kynetic_db
     ports:
       - "5432:5432"
