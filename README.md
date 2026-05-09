@@ -310,7 +310,7 @@ Kynetic est conçu pour être cloné et utilisé comme point de départ. Voici c
 ### 1. Cloner Kynetic sans l'historique Git
 
 ```bash
-git clone https://github.com/ton-username/kynetic.git nom-du-projet
+git clone https://github.com/rmannnana/kynetic.git nom-du-projet
 cd nom-du-projet
 ```
 
