@@ -303,6 +303,56 @@ findAll() {}
 
 ---
 
+## Utiliser Kynetic comme base pour un nouveau projet
+
+Kynetic est conçu pour être cloné et utilisé comme point de départ. Voici comment créer un nouveau projet indépendant à partir de Kynetic.
+
+### 1. Cloner Kynetic sans l'historique Git
+
+```bash
+git clone https://github.com/ton-username/kynetic.git nom-du-projet
+cd nom-du-projet
+```
+
+Supprime le lien avec le repository Kynetic :
+
+```bash
+rm -rf .git
+```
+
+Sur Windows :
+
+```bash
+rmdir /s /q .git
+```
+
+### 2. Initialiser un nouveau repository Git
+
+```bash
+git init
+git add .
+git commit -m "init: base de projet kynetic"
+```
+
+### 3. Lier au nouveau repository distant
+
+Crée un nouveau repository vide sur GitHub, puis :
+
+```bash
+git remote add origin https://github.com/ton-username/nom-du-projet.git
+git branch -M main
+git push -u origin main
+```
+
+### 4. Adapter le projet
+
+- Renomme le projet dans `package.json` (champ `name`)
+- Mets à jour le `.env` avec les variables propres au nouveau projet (nouvelle DB, nouveaux secrets JWT, nouveaux identifiants Google OAuth, nouveau `FRONTEND_URL`)
+- Mets à jour le `docker-compose.yml` si tu veux changer le nom du container et de la base de données
+- Ajoute tes propres modules avec `nest g module nom-du-module`
+
+---
+
 ## Licence
 
 MIT
