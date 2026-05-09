@@ -316,14 +316,15 @@ cd nom-du-projet
 
 Supprime le lien avec le repository Kynetic :
 
+1. Linux / Mac
 ```bash
 rm -rf .git
 ```
 
-Sur Windows :
+2. Windows (Powershell) :
 
 ```bash
-rmdir /s /q .git
+Remove-Item -Recurse -Force .git
 ```
 
 ### 2. Initialiser un nouveau repository Git
