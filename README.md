@@ -6,7 +6,7 @@ L'idée est simple : cloner ce projet, ajouter ses propres modules, et se concen
 
 ---
 
-## Stack technique
+## I. Stack technique
 
 | Outil | Version | Rôle |
 |---|---|---|
@@ -19,7 +19,7 @@ L'idée est simple : cloner ce projet, ajouter ses propres modules, et se concen
 
 ---
 
-## Prérequis
+## II. Prérequis
 
 Avant de commencer, assure-toi d'avoir installé :
 
@@ -29,7 +29,7 @@ Avant de commencer, assure-toi d'avoir installé :
 
 ---
 
-## Utiliser Kynetic comme base pour un nouveau projet
+## III. Utiliser Kynetic comme base pour un nouveau projet
 
 Kynetic est conçu pour être cloné et utilisé comme point de départ. Voici comment créer un nouveau projet indépendant à partir de Kynetic.
 
@@ -66,17 +66,16 @@ git add .
 git commit -m "init: base de projet kynetic"
 ```
 
-### 3. Lier au nouveau repository distant
-
+### 4. Lier au nouveau repository distant
 Crée un nouveau repository vide sur GitHub, puis :
 
 ```bash
-git remote add origin https://github.com/ton-username/nom-du-projet.git
+git remote add origin https://github.com/ton-username/nom-du-repository.git
 git branch -M main
 git push -u origin main
 ```
 
-### 3. Configurer les variables d'environnement
+### 5. Configurer les variables d'environnement
 
 Renomme le fichier `.env.example` en `.env` et remplis les valeurs.
 
@@ -85,29 +84,27 @@ cp .env.example .env
 ```
 Voir la section [Variables d'environnement](#variables-denvironnement) pour le détail de chaque variable.
 
+### 6. Adapter le projet
 
-### 4. Lancer la base de données
+- Renomme le projet dans `package.json` (champ `name`)
+- Mets à jour le `.env` avec les variables propres au nouveau projet (nouvelle DB, nouveaux secrets JWT, nouveaux identifiants Google OAuth, nouveau `FRONTEND_URL`)
+- Mets à jour le `docker-compose.yml` si tu veux changer le nom du container de la base de données
+
+### 7. Lancer la base de données
 
 ```bash
 docker compose up -d
 ```
-
-### 4. Adapter le projet
-
-- Renomme le projet dans `package.json` (champ `name`)
-- Mets à jour le `.env` avec les variables propres au nouveau projet (nouvelle DB, nouveaux secrets JWT, nouveaux identifiants Google OAuth, nouveau `FRONTEND_URL`)
-- Mets à jour le `docker-compose.yml` si tu veux changer le nom du container et de la base de données
-- Ajoute tes propres modules avec `nest g module nom-du-module`
-
 ---
 
-### 5. Appliquer les migrations Prisma
+### 8. Générer et appliquer les migrations Prisma
 
 ```bash
+npx prisma generate
 npx prisma migrate dev
 ```
 
-### 6. Lancer le projet
+### 9. Lancer le projet
 
 ```bash
 # Développement
@@ -122,41 +119,54 @@ L'API est disponible sur `http://localhost:3000`.
 
 ---
 
-## Variables d'environnement
+## IV. Variables d'environnement
 
-Voici le contenu du fichier `.env.example` avec une explication de chaque variable :
+Voici le contenu du fichier `.env.example` (ou `.env` si tu as déjà changer le nom à l'étape III.5) avec une explication de chaque variable :
 
-```env
-# URL de connexion à la base de données PostgreSQL
-# Format : postgresql://USER:PASSWORD@HOST:PORT/DB_NAME
-DATABASE_URL="postgresql://kynetic_user:kynetic_pass@localhost:5432/kynetic_db"
 
-# Clé secrète pour signer les access tokens JWT
-# Générer avec : node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+### 1. Variables liées à la base de données PostgreSQL
+Remplis les informations que tu souhaite pour ta base de données.
+```bash
+POSTGRES_USER=kynetic_user
+POSTGRES_PASSWORD=kynetic_password
+POSTGRES_DB=kynetic_db
+POSTGRES_PORT=5432
+```
+### 2. Tu peux modifier DB_URL si tu préfère utiliser une autre base de données.
+```bash
+DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:${POSTGRES_PORT}/${POSTGRES_DB}"
+```
+### 3. Clé secrète pour signer les access et refresh tokens JWT:
+```bash
 JWT_ACCESS_SECRET=change_me_access_secret
-
-# Clé secrète pour signer les refresh tokens JWT
-# Générer avec : node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 JWT_REFRESH_SECRET=change_me_refresh_secret
+```
+On peut les générer aléatoirement avec
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
 
-# Durée de vie de l'access token (ex: 15m, 1h, 24h)
+### 4. Durée de vie des tokens
+
+```bash
+# Access token (ex: 15m, 1h, 24h)
 JWT_ACCESS_EXPIRES_IN=15m
 
-# Durée de vie du refresh token (ex: 7d, 30d)
+# Refresh token (ex: 7d, 30d)
 JWT_REFRESH_EXPIRES_IN=7d
-
-# Identifiants OAuth Google
-# Obtenir sur : https://console.cloud.google.com → APIs & Services → Credentials
+```
+### 5. Identifiants OAuth Google
+Obtenir sur : https://console.cloud.google.com
+```bash
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
-
-# URL de callback Google OAuth (doit correspondre à celle configurée dans Google Cloud Console)
-GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
 ```
+### 6. URL de callback Google OAuth (doit correspondre à celle configurée dans Google Cloud Console)
+GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
 
 ---
 
-## Structure du projet
+## V. Structure du projet
 
 ```
 src/
@@ -206,7 +216,7 @@ docker-compose.yml               # Configuration Docker pour PostgreSQL
 
 ---
 
-## Endpoints disponibles
+## VI. Endpoints disponibles
 
 ### Authentification
 
@@ -269,9 +279,9 @@ Authorization: Bearer <access_token>
 
 ---
 
-## Modèle de données
+## VII. Modèle de données
 
-### User
+### 1. User
 
 | Champ | Type | Description |
 |---|---|---|
@@ -283,7 +293,7 @@ Authorization: Bearer <access_token>
 | createdAt | DateTime | Date de création |
 | updatedAt | DateTime | Date de mise à jour |
 
-### RefreshToken
+### 2. RefreshToken
 
 | Champ | Type | Description |
 |---|---|---|
@@ -295,7 +305,7 @@ Authorization: Bearer <access_token>
 
 ---
 
-## Sécurité
+## VIII. Sécurité
 
 - **Helmet** : headers de sécurité HTTP appliqués globalement
 - **Rate limiting** : 20 requêtes/minute sur toutes les routes, 10 requêtes/minute sur les routes d'authentification
@@ -305,7 +315,7 @@ Authorization: Bearer <access_token>
 
 ---
 
-## Ajouter un nouveau module
+## IX. Ajouter un nouveau module
 
 Pour étendre ce projet avec un nouveau module (exemple : `products`) :
 
@@ -344,6 +354,6 @@ findAll() {}
 
 ---
 
-## Licence
+## X. Licence
 
 MIT
