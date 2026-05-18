@@ -28,13 +28,24 @@ export class UsersService {
     }
 
     async findOrCreateGoogleUser(googleId: string, email: string) {
+        // 1. Chercher par googleId
         let user = await this.prisma.user.findUnique({ where: { googleId } });
-        if (!user) {
-            user = await this.prisma.user.create({
-                data: { email, googleId },
+        if (user) return user;
+
+        // 2. Chercher par email — compte existant via email/password
+        user = await this.prisma.user.findUnique({ where: { email } });
+        if (user) {
+            // Lier le googleId au compte existant
+            return this.prisma.user.update({
+                where: { id: user.id },
+                data: { googleId },
             });
         }
-        return user;
+
+        // 3. Aucun compte trouvé — créer un nouveau
+        return this.prisma.user.create({
+            data: { email, googleId },
+        });
     }
 
     async updateRole(id: string, role: Role) {
